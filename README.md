@@ -38,3 +38,23 @@ This toolkit implements standard volatility metrics adapted specifically for **D
 Ensure you install the native ENTSO-E Python wrapper package to seamlessly process data frames:
 ```bash
 pip install entsoe-py pandas numpy matplotlib seaborn
+
+
+
+
+
+import pandas as pd
+from entsoe import EntsoePandasClient
+
+# Initialize client with your ENTSO-E API Security Token
+api_key = "YOUR_API_KEY_HERE"
+client = EntsoePandasClient(api_key=api_key)
+
+# Configure Target Parameters (Example: Germany grid data)
+start = pd.Timestamp('2026-01-01', tz='Europe/Berlin')
+end = pd.Timestamp('2026-12-31', tz='Europe/Berlin')
+country_code = 'DE_LU' 
+
+# Fetch Day-Ahead Hourly Prices (EUR/MWh)
+day_ahead_prices = client.query_day_ahead_prices(country_code, start=start, end=end)
+print(day_ahead_prices.describe())
